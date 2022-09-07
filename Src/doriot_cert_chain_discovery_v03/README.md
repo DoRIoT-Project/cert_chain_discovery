@@ -5,7 +5,7 @@ The project is part of [DoRIoT](http://doriot.net/).
 Most Internet of Things (IoT) platforms are cloud-based, and devices must be registered and managed centrally via the cloud interface. This means that certificates for authentication must be stored and managed centrally by a web interface that is a single point of failure in case of an attack. To avoid this issue, Web of Trust-based approaches can be used.The project is regarding the implementation of a certificate chain discovery protocol,based on the Web of Trust and is implemented as a module for RIOT OS.
 
 
-##Concept
+## Concept
 CoAP resource directories are introduces in the network,which provides a service for storing the digital certificates of nodes in the network.
 A semistructures heirarchial network topology based on WoT is formed as shown below.
 
