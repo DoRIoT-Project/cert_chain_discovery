@@ -18,6 +18,8 @@
 #include "periph/hwrng.h"
 #include "crypto/ciphers.h"
 
+#include "xtimer.h"
+
 #if CONFIG_WOT_USE_CRYPTO_CELL
 #if IS_ACTIVE(MODULE_LIB_CRYPTOCELL)
 #include "cryptocell_util.h"
@@ -421,8 +423,6 @@ CborError wot_parse_cbor_cert_client(uint8_t *payload, uint16_t payload_len)
 
 }
 /*--------------------------lookup interface----------------------------*/
-
-
 
 #if CONFIG_WOT_USE_CRYPTO_CELL
 int _set_crypto_cell_private_key(CRYS_ECPKI_UserPrivKey_t *crypto_pvt_key)

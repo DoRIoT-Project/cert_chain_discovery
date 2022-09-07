@@ -111,7 +111,7 @@ int _set_crypto_cell_private_key(CRYS_ECPKI_UserPrivKey_t *crypto_pvt_key)
         CRYS_ECPKI_DomainID_secp256r1);
     ret = CRYS_ECPKI_BuildPrivKey(pDomain, credentials_module.private_key, (uint32_t)PVT_KEY_SIZE, crypto_pvt_key);
     if (ret != CRYS_OK) {
-        DEBUG("failed to crypt private key\n");
+        DEBUG("failed to copy crypt private key\n");
         return 1;
     }
     else {
@@ -515,9 +515,7 @@ static int _wot_check_lookup_cbor_cert_valid(uint8_t *cbor_buf_csr, uint8_t cert
     /*compute hash of certificate*/
     uint8_t hash_cert[SHA256_DIGEST_LENGTH] = { 0 };
     sha256((uint8_t *)cbor_buf_csr, cert_len, hash_cert);
-    //uint32_t uecc_start_time = xtimer_now_usec();
     const struct uECC_Curve_t *curve = uECC_secp256r1();
-    uint32_t uecc_start_time = xtimer_now_usec();
     if ((uECC_verify(node->pubkey, hash_cert, sizeof(hash_cert), signature, curve)) != 1) {
         DEBUG("invalid certificate\n");
         return 1;
@@ -526,8 +524,6 @@ static int _wot_check_lookup_cbor_cert_valid(uint8_t *cbor_buf_csr, uint8_t cert
         DEBUG("verified with public key,valid certificate\n");
     }
     #endif
-    //uint32_t uecc_end_time = xtimer_now_usec();
-    //printf("uecc time:%ld,\n", (uecc_end_time - uecc_start_time));
     return 0;
 }
 
@@ -542,11 +538,6 @@ static int _wot_check_lookup_cbor_cert_valid(uint8_t *cbor_buf_csr, uint8_t cert
  */
 CborError wot_parse_cbor_cert_lookup(uint8_t *payload, uint16_t payload_len)
 {
-    /*the tme stamps are just for evaluation,needs to be removed*/
-    uint32_t start_time;
-    uint32_t end_time;
-
-    start_time = xtimer_now_usec();
 
     CborParser parser;
     CborValue it;
@@ -627,9 +618,6 @@ CborError wot_parse_cbor_cert_lookup(uint8_t *payload, uint16_t payload_len)
         else {
             DEBUG("valid certificate\n");
             _wot_store_cert(cbor_buf_csr, cert_len, 1);
-            end_time = xtimer_now_usec();
-            printf("c509 processing time:%ld,\n", (end_time - start_time));
-
         }
         free(rd_common_name);
         free(cbor_buf_csr);

@@ -7,21 +7,13 @@ EXTERNAL_MODULE_DIRS += $(CURDIR)/../../doriot_wot
 
 USEMODULE += shell
 USEMODULE += shell_commands
-######followind modules are for evaluation##################
-#USEMODULE += ps
-#USEMODULE += schedstatistics
-#USEMODULE += stdio_cdc_acm
-#USEMODULE += gnrc_icmpv6_echo
-#USEMODULE += auto_init_usbus
-#USEMODULE += usbus_cdc_ecm
-USEMODULE += sema
 DEVELHELP ?= 1
-############################################################
+
 #CFLAGS += -DTHREAD_STACKSIZE_MAIN=\(2*THREAD_STACKSIZE_LARGE\)
 CFLAGS += -DGCOAP_STACK_SIZE=\(3*THREAD_STACKSIZE_LARGE\)
 
-USEMODULE += lib_cryptocell
-ARCHIVES += $(RIOTBASE)/cpu/nrf52/cryptocell_lib/libnrf_cc310_0.9.12.a
+#USEMODULE += lib_cryptocell
+#ARCHIVES += $(RIOTBASE)/cpu/nrf52/cryptocell_lib/libnrf_cc310_0.9.12.a
 
 # Increase from default for confirmable block2 follow-on requests
 GCOAP_RESEND_BUFS_MAX ?= 2

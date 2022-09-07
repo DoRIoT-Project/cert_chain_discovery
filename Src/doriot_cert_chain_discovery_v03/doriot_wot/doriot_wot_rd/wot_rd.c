@@ -16,6 +16,8 @@
 #include "net/gcoap.h"
 #include "od.h"
 
+#include "xtimer.h"
+
 #include "wot_cbor.h"
 #include "wot_auth.h"
 #include "wot_list.h"
@@ -115,8 +117,6 @@ static ssize_t _rd_cert_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, void 
     (void)ctx;
     DEBUG("---received cert request from client---");
     /*creating cbor client cert*/
-    //uint8_t c_buf[CBOR_BUFSIZE];
-    //memset(c_buf, 0, CBOR_BUFSIZE);
     uint8_t *rd_c_buf = (uint8_t *)calloc(CBOR_BUFSIZE, sizeof(uint8_t));
     int cbor_len = wot_get_cbor_certificate_rd(rd_c_buf);
 
@@ -141,10 +141,12 @@ static ssize_t _rd_cert_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, void 
 }
 
 /*--------------------------lookup interface----------------------------*/
+
 static ssize_t _lookup_cert_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, void *ctx)
 {
     (void)ctx;
-    DEBUG("---received cert lookup request from client---");
+    DEBUG("---received cert lookup request from client---\n");
+
     char client_name[NAME_MAX_LEN] = { 0 };
     char lookup_name[NAME_MAX_LEN] = { 0 };
     uint8_t c_buf[CBOR_BUFSIZE] = { 0 };
@@ -161,12 +163,12 @@ static ssize_t _lookup_cert_handler(coap_pkt_t *pdu, uint8_t *buf, size_t len, v
                     gcoap_resp_init(pdu, buf, len, COAP_CODE_CONTENT);
                     coap_opt_add_format(pdu, COAP_FORMAT_CBOR);
                     size_t resp_len = coap_opt_finish(pdu, COAP_OPT_FINISH_PAYLOAD);
-
+                    
                     //write the cbor cert in the response buffer
                     if (pdu->payload_len >= cbor_len) {
                         memcpy(pdu->payload, c_buf, cbor_len);
                         DEBUG("sent cert to client");
-                        DEBUG("total response len:%d\n", resp_len + cbor_len);
+                        DEBUG("total response len:%d + %d\n", resp_len,cbor_len);
                         return resp_len + cbor_len;
                     }
                     else {

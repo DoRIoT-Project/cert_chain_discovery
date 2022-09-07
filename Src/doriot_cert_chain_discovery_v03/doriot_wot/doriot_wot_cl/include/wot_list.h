@@ -21,7 +21,7 @@ extern "C" {
 #endif
 
 #define PUB_KEY_SIZE 64
-#define COMMON_NAME_MAX_LEN 16
+#define COMMON_NAME_MAX_LEN 8
 
 typedef struct {
     list_node_t next;
