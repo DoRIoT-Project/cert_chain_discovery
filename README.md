@@ -9,7 +9,7 @@ Most Internet of Things (IoT) platforms are cloud-based, and devices must be reg
 CoAP resource directories are introduces in the network,which provides a service for storing the digital certificates of nodes in the network.
 A semistructures heirarchial network topology based on WoT is formed as shown below.
 
-![main topology](main_topology.jpg)
+![main topology](img/main_topology.jpg)
 
 When a new node enters the network, it goes through the following steps. 
  
@@ -27,7 +27,7 @@ When a new node enters the network, it goes through the following steps.
 
 The current implementation supports a subpart of the topology as shown below,which contains a single resouce directory with multiple clients connected to it
 
-![sub topology](sub_topology.jpg)
+![sub topology](img/sub_topology.jpg)
 
 The implementation mainly consists of two mechanisms
  1. Registration mechanism - clients registers with the resource directory
@@ -35,11 +35,11 @@ The implementation mainly consists of two mechanisms
  
  The sequence diagram of registration mechanism is as shown below
  
- ![registration](registration.jpg)
+ ![registration](img/registration.jpg)
  
   The sequence diagram of lookup mechanism is as shown below
  
- ![lookup](lookup.jpg)
+ ![lookup](img/lookup.jpg)
 
 
 ### Folder structure
